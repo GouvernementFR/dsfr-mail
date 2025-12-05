@@ -34,7 +34,7 @@ Il est recommandé de consulter la [documentation officielle du DSFR](https://ww
   - `@media (max-width: 480px)` : Smartphones
 - **Images responsive** avec classes `.wlkm-resp` et `.img-max`
 
-#### Structure modulaire
+### 🧩 Structure modulaire
 
 Le template est composé de plusieurs sections modulaires réutilisables :
 
