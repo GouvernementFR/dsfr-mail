@@ -1,0 +1,44 @@
+name: Deploy template-generique to GitHub Pages (branch doc)
+
+on:
+  push:
+    branches: ["main"]   # Déclenchement quand tu push sur main
+  workflow_dispatch:      # Permet lancement manuel
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Prepare build directory
+        run: |
+          mkdir build
+          cp template-generique.html build/index.html   # on renomme pour GitHub Pages
+          cp -R assets build/assets                     # ou asset si ton dossier s'appelle comme ça
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build'
+
+      - name: Deploy to GitHub Pages (branch doc)
+        id: deployment
+        uses: actions/deploy-pages@v4
